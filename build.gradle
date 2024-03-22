@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+}
+
+group = 'eu.hansolo'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+/*
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+*/
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.add("--enable-preview")
+}
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+    jvmArgs("--enable-preview")
+}
+tasks.withType(JavaExec) {
+    jvmArgs += "--enable-preview"
+}
+
+test {
+    useJUnitPlatform()
+}
